@@ -18,7 +18,6 @@ export default function Employee({employeeTree}: EmployeeProps) {
           <div className={styles.subEmployeeWrapper}>
             {
               subEmployeeTrees.map((subEmployeeTree: IEmployeeTree, index: number) => (
-                // <Employee key={index} employeeTree={subEmployeeTree} parentPosition={position} />
                 <Employee key={index} employeeTree={subEmployeeTree}/>
               ))
             }

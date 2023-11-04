@@ -14,5 +14,5 @@ export const store = configureStore({
 setupListeners(store.dispatch);
 
 export { 
-  useFetchEmployeeTreeQuery as fetchEmployeeTree, useAddEmployeeMutation as addEmployee, useUpdateEmployeeMutation as updateEmployee, useDeleteEmployeeMutation as deleteEmployee 
+  useFetchEmployeeTreeQuery as fetchEmployeeTree, useAddEmployeeMutation, useUpdateEmployeeMutation, useDeleteEmployeeMutation
 } from './apis/employeesApi';

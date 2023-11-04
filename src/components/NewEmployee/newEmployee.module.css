@@ -1,0 +1,44 @@
+.newEmployeeWrapper {
+  position: relative;
+}
+
+.newEmployeeWrapper > .form {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  padding: 1em .5em;
+  border: 1px solid rgba(var(--callout-border-rgb), 0.25);
+  border-radius: 10px;
+  gap: .5rem;
+}
+
+.newEmployeeWrapper > .form.open {
+  z-index: 1;
+  top: 100%;
+  opacity: 1;
+  visibility: visible;
+}
+
+.form input {
+  background: rgb(var(--callout-rgb));
+  border: none;
+  padding: .5rem;
+  border-radius: 5px;
+}
+
+.form input:focus {
+  outline: none;
+}
+
+.form button {
+  border: none;
+  background-color: rgb(var(--foreground-rgb));
+  color: rgb(var(--background-start-rgb));
+  padding: .5rem;
+  border-radius: 5px;
+  cursor: pointer;
+}

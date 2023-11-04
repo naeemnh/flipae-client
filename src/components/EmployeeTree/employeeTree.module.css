@@ -1,0 +1,10 @@
+.treeWrapper {
+  margin: 1rem;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.treeWrapper > div {
+  flex: 1 1 50%;
+}

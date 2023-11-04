@@ -1,0 +1,22 @@
+.employeeWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  flex: 1 1 50%;
+  /* width: 100%; */
+  position: relative;
+}
+
+.subEmployeeWrapper {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 1rem;
+  width: 100%;
+  /* border-bottom: 0px; */
+  /* height: 100%; */
+  border-radius: 0.5rem;
+  padding: .5rem;
+}

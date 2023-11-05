@@ -1,12 +1,10 @@
-// "use client";
-
 import Image from 'next/image';
 
 import styles from './page.module.css';
-import EmployeeTree from '@/components/EmployeeTree';
-import NewEmployee from '@/components/NewEmployee';
 import Store from '@/providers/Store';
 import Flash from '@/providers/Flash';
+import EmployeeTree from '@/components/EmployeeTree';
+import Actions from '@/components/Actions';
 
 export default async function Home() {
 
@@ -17,7 +15,7 @@ export default async function Home() {
         <main className={styles.main}>
             <div className={styles.description}>
               <div className={styles.actions}>
-                <NewEmployee />
+                <Actions />
               </div>
               <p>
                 Get started by importing the&nbsp;

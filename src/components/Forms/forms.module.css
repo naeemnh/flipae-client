@@ -1,8 +1,8 @@
-.newEmployeeWrapper {
+.formWrapper {
   position: relative;
 }
 
-.newEmployeeWrapper > .form {
+.formWrapper > .form {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -16,7 +16,7 @@
   gap: .5rem;
 }
 
-.newEmployeeWrapper > .form.open {
+.formWrapper > .form.open {
   z-index: 1;
   top: 100%;
   opacity: 1;

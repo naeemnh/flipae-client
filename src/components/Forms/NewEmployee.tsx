@@ -1,19 +1,20 @@
 "use client";
 
-import { useState } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 import classNames from "classnames";
 import toast from "react-hot-toast";
 
-import styles from './newEmployee.module.css';
+import styles from './forms.module.css';
 import { fetchEmployeeTree, useAddEmployeeMutation } from "@/store";
+import { FormProps } from "@/types";
 
-export default function newEmployee() {
+export default function NewEmployee({open, handleClose, handleToggle, closeThis}: FormProps) {
 
   // Icon Interaction
-  const [open, setOpen] = useState<boolean>(false);
-
-  const toggleOpen = () => setOpen(!open);
+  function handleFormToggle() {
+    handleClose();
+    handleToggle();
+  }
   const formClassNames = classNames({[styles.form]: true, [styles.open]: open});
 
   // Form Interaction
@@ -30,7 +31,7 @@ export default function newEmployee() {
       .unwrap()
       .then(() => {
         refetch();
-        setOpen(false);
+        closeThis();
         toast.success('Employee added successfully');
       })
       .catch((res) => toast.error(res.data.error));
@@ -38,8 +39,8 @@ export default function newEmployee() {
 
   
   return (
-    <div className={styles.newEmployeeWrapper}>
-      <FaUserPlus onClick={toggleOpen} cursor={'pointer'} size={24} />
+    <div className={styles.formWrapper}>
+      <FaUserPlus onClick={handleFormToggle} cursor={'pointer'} size={24} />
       <form onSubmit={handleSubmit} className={formClassNames}>
         <input type="text" name="employeeName" placeholder="Employee Name" />
         <button type="submit" >Add</button>

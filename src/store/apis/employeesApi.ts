@@ -1,11 +1,13 @@
 import { BASE_API_URL } from "@/constants";
-import { IEmployee, IEmployeeTree } from "@/types";
+import { IEmployee, IEmployeeTree, ISupervisedEmployee } from "@/types";
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {HYDRATE} from 'next-redux-wrapper';
 
 const employeesApi = createApi({
   reducerPath: 'employeesApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${BASE_API_URL}/employees` }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${BASE_API_URL}/employees`
+  }),
   extractRehydrationInfo(action, { reducerPath, }) {
       if (action.type == HYDRATE)
         return action.payload[reducerPath]
@@ -16,6 +18,14 @@ const employeesApi = createApi({
         query: () => {
           return {
             url: '/',
+            method: 'GET',
+          }
+        }
+      }),
+      fetchEmployeeList: build.query<ISupervisedEmployee[], void>({
+        query: () => {
+          return {
+            url: '/list',
             method: 'GET',
           }
         }
@@ -35,13 +45,13 @@ const employeesApi = createApi({
         }
       }),
       updateEmployee: build.mutation<IEmployee, Partial<IEmployee>>({
-        query: ({name, ...args}) => {
+        query: ({name, newSupervisor}) => {
           return {
             url: `/${name}`,
             method: 'PUT',
             body: {
               name,
-              ...args
+              newSupervisor
             },
           }
         }
@@ -58,5 +68,5 @@ const employeesApi = createApi({
   },
 });
 
-export const { useFetchEmployeeTreeQuery, useAddEmployeeMutation, useUpdateEmployeeMutation, useDeleteEmployeeMutation } = employeesApi;
+export const { useFetchEmployeeTreeQuery, useFetchEmployeeListQuery, useAddEmployeeMutation, useUpdateEmployeeMutation, useDeleteEmployeeMutation } = employeesApi;
 export { employeesApi };

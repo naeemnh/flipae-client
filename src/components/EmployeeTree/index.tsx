@@ -9,7 +9,10 @@ import styles from './employeeTree.module.css'
 export default function EmployeeTree() {
   const { data, error, isLoading } = fetchEmployeeTree();
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Something has gone wrong</div>;
+  if (error) {
+    console.log(error);
+    return <div>Something has gone wrong</div>
+  };
   if (data)
     return (
       <div className={styles.treeWrapper}>

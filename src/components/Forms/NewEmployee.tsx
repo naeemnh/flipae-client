@@ -1,12 +1,13 @@
 "use client";
 
-import { FaUserPlus } from "react-icons/fa6";
+import { ChangeEvent, FormEvent, useState } from "react";
 import classNames from "classnames";
 import toast from "react-hot-toast";
+import { FaUserPlus } from "react-icons/fa6";
 
-import styles from './forms.module.css';
-import { fetchEmployeeTree, useAddEmployeeMutation } from "@/store";
 import { FormProps } from "@/types";
+import styles from './forms.module.css';
+import { fetchEmployeeList, fetchEmployeeTree, useAddEmployeeMutation } from "@/store";
 
 export default function NewEmployee({open, handleClose, handleToggle, closeThis}: FormProps) {
 
@@ -18,10 +19,13 @@ export default function NewEmployee({open, handleClose, handleToggle, closeThis}
   const formClassNames = classNames({[styles.form]: true, [styles.open]: open});
 
   // Form Interaction
-  const { refetch } = fetchEmployeeTree()
+  const { refetch: refetchTree } = fetchEmployeeTree();
+  const { refetch: refetchList } = fetchEmployeeList();
   const [addEmployee, results] = useAddEmployeeMutation();
+  const [employeeName, setEmployeeName] = useState<string>('');
+  const handleEmployeeName = (e: ChangeEvent<HTMLInputElement>) => setEmployeeName(e.target.value);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const target = e.target as typeof e.target & {
       employeeName: { value: string };
@@ -30,11 +34,13 @@ export default function NewEmployee({open, handleClose, handleToggle, closeThis}
     addEmployee({ name: employeeName })
       .unwrap()
       .then(() => {
-        refetch();
+        refetchTree();
+        refetchList();
         closeThis();
         toast.success('Employee added successfully');
       })
       .catch((res) => toast.error(res.data.error));
+    setEmployeeName('');
   }
 
   
@@ -42,7 +48,7 @@ export default function NewEmployee({open, handleClose, handleToggle, closeThis}
     <div className={styles.formWrapper}>
       <FaUserPlus onClick={handleFormToggle} cursor={'pointer'} size={24} />
       <form onSubmit={handleSubmit} className={formClassNames}>
-        <input type="text" name="employeeName" placeholder="Employee Name" />
+        <input type="text" name="employeeName" onChange={handleEmployeeName} value={employeeName} placeholder="Employee Name" />
         <button type="submit" >Add</button>
       </form>
     </div>

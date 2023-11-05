@@ -6,9 +6,6 @@ const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ 
     baseUrl: `${BASE_API_URL}/auth`,
-    prepareHeaders: (headers) => {
-      return headers;
-    },
     headers: {
       "ContentType": "application/json"
     },
@@ -41,10 +38,14 @@ const authApi = createApi({
       }),
       fetchUser: build.query<any, void>({
         query: () => {
+          const authToken = localStorage.getItem('authToken');
           return {
             url: '/',
             method: 'GET',
-
+            withCredentials: true,
+            headers: {
+              ...(authToken && {Authorization: `Bearer ${authToken}`})
+            }
           }
         }
       }),

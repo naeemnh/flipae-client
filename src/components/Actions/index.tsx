@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import NewEmployee from "../Forms/NewEmployee";
-import UpdateEmployee from "../Forms/UpdateEmployee";
+import { Login, Logout, NewEmployee, UpdateEmployee } from "@/components/Forms";
 import { useFetchUserQuery } from "@/store/apis/authApi";
-import Login from "../Forms/Login";
 
 export default function Actions() {
   const {data, isSuccess} = useFetchUserQuery();
@@ -29,6 +27,7 @@ function LoggedInActions() {
     <>
       <NewEmployee open={addOpen} handleClose={closeUpdate} handleToggle={toggleAddOpen} closeThis={closeAdd} />
       <UpdateEmployee open={updateOpen} handleClose={closeAdd} handleToggle={toggleUpdateOpen} closeThis={closeUpdate} />
+      <Logout/>
     </>
   )
 }

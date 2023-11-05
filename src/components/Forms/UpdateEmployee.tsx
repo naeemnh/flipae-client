@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FaUserPen } from "react-icons/fa6";
 import classNames from "classnames";
 import toast from "react-hot-toast";
@@ -21,28 +21,28 @@ export default function UpdateEmployee({open, handleClose, handleToggle, closeTh
   });
 
   // Form Interaction
-  const { refetch } = fetchEmployeeTree();
-  const {data} = fetchEmployeeList()
+  const { refetch: refetchTree } = fetchEmployeeTree();
+  const {data, refetch: refetchList} = fetchEmployeeList()
   const [updateEmployee, results] = useUpdateEmployeeMutation();
-  const [selectedEmployee, setSelectedEmployee] = useState<string>("");
+  const [selectedEmployees, setSelectedEmployees] = useState<{employee: string, supervisor: string}>({employee: '', supervisor: ''});
   const [filteredEmployees, setFilteredEmployees] = useState<ISupervisedEmployee[]>([]);
 
-  // Filter out the selected employee and their supervisor from the list of employees
+  // Filter out the selected employee from the list of employees
   useEffect(() => {
+    const {employee: selectedEmployee } = selectedEmployees;
     if (selectedEmployee) {
-      setFilteredEmployees(data?.filter((employee: ISupervisedEmployee) => employee.name !== selectedEmployee && employee.supervisor?.name !== selectedEmployee) || [])
+      setFilteredEmployees(data?.filter((employee: ISupervisedEmployee) => employee.name !== selectedEmployee) || [])
     }
-  }, [selectedEmployee])
+  }, [selectedEmployees.employee])
 
 
-  function handleEmployeeSelection(e: React.ChangeEvent<HTMLSelectElement>) {
-    const target = e.target as typeof e.target & {
-      value: string;
-    };
-    setSelectedEmployee(target.value);
-  }
+  const handleEmployeeSelection = (e: ChangeEvent<HTMLSelectElement>) =>
+    setSelectedEmployees(selectedEmployees => ({...selectedEmployees, employee: e.target.value}));
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const handleSupervisorSelection = (e: ChangeEvent<HTMLSelectElement>) =>
+    setSelectedEmployees(selectedEmployees => ({...selectedEmployees, supervisor: e.target.value}));
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const target = e.target as typeof e.target & {
       employeeName: { value: string };
@@ -53,11 +53,13 @@ export default function UpdateEmployee({open, handleClose, handleToggle, closeTh
     updateEmployee({ name: employeeName, newSupervisor})
       .unwrap()
       .then(() => {
-        refetch();
+        refetchTree();
+        refetchList();
         closeThis();
         toast.success("Employee updated successfully");
       })
       .catch((res) => toast.error(res.data.error));
+    setSelectedEmployees({employee: '', supervisor: ''});
   }
 
   return (
@@ -70,7 +72,7 @@ export default function UpdateEmployee({open, handleClose, handleToggle, closeTh
             <option key={employee.name} value={employee.name!}>{employee.name}</option>
           ))}
         </select>
-        <select defaultValue={''} name="newSupervisor" id="newSupervisor">
+        <select defaultValue={''} onChange={handleSupervisorSelection} name="newSupervisor" id="newSupervisor">
           <option value=''>New Supervisor</option>
           {
             filteredEmployees.map((employee: ISupervisedEmployee) => (

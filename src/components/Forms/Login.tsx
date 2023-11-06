@@ -37,8 +37,7 @@ export default function Login() {
         toast.success("Logged in");
       })
       .catch((res) => {
-        console.log(res)
-        toast.error('error occured')
+        toast.error('Incorrect username or password')
       })
   }
 

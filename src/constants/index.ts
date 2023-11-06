@@ -1,1 +1,1 @@
-export const BASE_API_URL = process.env.API_URL;
+export const BASE_API_URL = process.env.API_URL || "https://api-esr-484054d901eb.herokuapp.com";

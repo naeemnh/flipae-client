@@ -35,6 +35,7 @@ const employeesApi = createApi({
       }),
       addEmployee: build.mutation<IEmployee, Partial<IEmployee>>({
         query: ({relation, ...args}) => {
+          const token = localStorage.getItem('authToken');
           return {
             url: '/',
             method: 'POST',
@@ -44,11 +45,15 @@ const employeesApi = createApi({
             body: {
               ...args
             },
+            headers: {
+              ...(token && {Authorization: `Bearer ${token}`})
+            }
           }
         }
       }),
       updateEmployee: build.mutation<IEmployee, Partial<IEmployee>>({
         query: ({name, newSupervisor}) => {
+          const token = localStorage.getItem('authToken');
           return {
             url: `/${name}`,
             method: 'PUT',
@@ -56,23 +61,34 @@ const employeesApi = createApi({
               name,
               newSupervisor
             },
+            headers: {
+              ...(token && {Authorization: `Bearer ${token}`})
+            }
           }
         }
       }),
       deleteEmployee: build.mutation<IEmployee, Partial<IEmployee>>({
         query: ({name}) => {
+          const token = localStorage.getItem('authToken');
           return {
             url: `/${name}`,
             method: 'DELETE',
+            headers: {
+              ...(token && {Authorization: `Bearer ${token}`})
+            }
           }
         }
       }),
       uploadEmployees: build.mutation<any, {employees: {[key:string]: string}}>({
         query: ({employees}) => {
+          const token = localStorage.getItem('authToken');
           return {
             url: '/upload',
             method: 'POST',
             body: {employees},
+            headers: {
+              ...(token && {Authorization: `Bearer ${token}`})
+            }
           }
         }
       })

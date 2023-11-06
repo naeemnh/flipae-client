@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Login, Logout, NewEmployee, UpdateEmployee } from "@/components/Forms";
 import { useFetchUserQuery } from "@/store/apis/authApi";
+import UploadCSV from "../Forms/UploadCSV";
 
 export default function Actions() {
   const {data, isSuccess} = useFetchUserQuery();
@@ -16,17 +17,30 @@ export default function Actions() {
 function LoggedInActions() {
   const [addOpen, setAddOpen] = useState<boolean>(false);
   const [updateOpen, setUpdateOpen] = useState<boolean>(false);
+  const [fileOpen, setFileOpen] = useState<boolean>(false);
 
   const toggleAddOpen = () => setAddOpen(!addOpen);
   const toggleUpdateOpen = () => setUpdateOpen(!updateOpen);
+  const toggleFileOpen = () => setFileOpen(!fileOpen);
 
-  const closeAdd = () => setAddOpen(false);
-  const closeUpdate = () => setUpdateOpen(false);
+  const closeUpdateFile = () => {
+    setUpdateOpen(false);
+    setFileOpen(false);
+  }
+  const closeAddFile = () => {
+    setAddOpen(false);
+    setFileOpen(false);
+  }
+  const closeAddUpdate = () => {
+    setAddOpen(false);
+    setUpdateOpen(false);
+  }
 
   return(
     <>
-      <NewEmployee open={addOpen} handleClose={closeUpdate} handleToggle={toggleAddOpen} closeThis={closeAdd} />
-      <UpdateEmployee open={updateOpen} handleClose={closeAdd} handleToggle={toggleUpdateOpen} closeThis={closeUpdate} />
+      <UploadCSV open={fileOpen} handleClose={closeAddUpdate} handleToggle={toggleFileOpen}/>
+      <NewEmployee open={addOpen} handleClose={closeUpdateFile} handleToggle={toggleAddOpen} />
+      <UpdateEmployee open={updateOpen} handleClose={closeAddFile} handleToggle={toggleUpdateOpen} />
       <Logout/>
     </>
   )

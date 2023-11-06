@@ -23,5 +23,4 @@ export interface FormProps {
   open: boolean,
   handleClose: () => void,
   handleToggle: () => void,
-  closeThis: () => void,
 }

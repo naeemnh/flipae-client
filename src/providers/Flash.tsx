@@ -14,6 +14,6 @@ export default function Flash() {
   }, [toasts]);
 
   return (
-    <Toaster position="bottom-left" reverseOrder={false} />
+    <Toaster position="bottom-right" reverseOrder={false} />
   )
 }

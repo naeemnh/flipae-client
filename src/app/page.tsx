@@ -14,15 +14,6 @@ export default async function Home() {
       <Store>
         <main className={styles.main}>
             <div className={styles.description}>
-              <div className={styles.actions}>
-                <Actions />
-              </div>
-              <p>
-                Get started by importing the&nbsp;
-                <a href="/download/inputData" target="_blank" rel="noopener noreferrer">
-                <code className={styles.code}>json file</code>
-                </a>
-              </p>
               <div>
                   <Image
                     src="/logo.svg"
@@ -32,6 +23,15 @@ export default async function Home() {
                     height={24}
                     priority
                   />
+              </div>
+              <p>
+                Get started by importing the&nbsp;
+                <a href="/download/inputData" target="_blank" rel="noopener noreferrer">
+                <code className={styles.code}>json file</code>
+                </a>
+              </p>
+              <div className={styles.actions}>
+                <Actions />
               </div>
             </div>
             <EmployeeTree />

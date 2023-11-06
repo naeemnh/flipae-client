@@ -6,7 +6,10 @@ import {HYDRATE} from 'next-redux-wrapper';
 const employeesApi = createApi({
   reducerPath: 'employeesApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${BASE_API_URL}/employees`
+    baseUrl: `${BASE_API_URL}/employees`,
+    headers: {
+      'Content-Type': 'application/json'
+    }
   }),
   extractRehydrationInfo(action, { reducerPath, }) {
       if (action.type == HYDRATE)
@@ -64,9 +67,18 @@ const employeesApi = createApi({
           }
         }
       }),
+      uploadEmployees: build.mutation<any, {employees: {[key:string]: string}}>({
+        query: ({employees}) => {
+          return {
+            url: '/upload',
+            method: 'POST',
+            body: {employees},
+          }
+        }
+      })
     }
   },
 });
 
-export const { useFetchEmployeeTreeQuery, useFetchEmployeeListQuery, useAddEmployeeMutation, useUpdateEmployeeMutation, useDeleteEmployeeMutation } = employeesApi;
+export const { useFetchEmployeeTreeQuery, useFetchEmployeeListQuery, useAddEmployeeMutation, useUpdateEmployeeMutation, useDeleteEmployeeMutation, useUploadEmployeesMutation } = employeesApi;
 export { employeesApi };

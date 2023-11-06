@@ -9,7 +9,7 @@ import styles from "./forms.module.css";
 import { fetchEmployeeList, fetchEmployeeTree, useUpdateEmployeeMutation } from "@/store";
 import { ISupervisedEmployee, FormProps } from "@/types";
 
-export default function UpdateEmployee({open, handleClose, handleToggle, closeThis}: FormProps) {
+export default function UpdateEmployee({open, handleClose, handleToggle}: FormProps) {
   function handleFormToggle() {
     handleClose();
     handleToggle();
@@ -55,7 +55,7 @@ export default function UpdateEmployee({open, handleClose, handleToggle, closeTh
       .then(() => {
         refetchTree();
         refetchList();
-        closeThis();
+        handleToggle();
         toast.success("Employee updated successfully");
       })
       .catch((res) => toast.error(res.data.error));

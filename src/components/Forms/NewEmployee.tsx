@@ -9,7 +9,7 @@ import { FormProps } from "@/types";
 import styles from './forms.module.css';
 import { fetchEmployeeList, fetchEmployeeTree, useAddEmployeeMutation } from "@/store";
 
-export default function NewEmployee({open, handleClose, handleToggle, closeThis}: FormProps) {
+export default function NewEmployee({open, handleClose, handleToggle}: FormProps) {
 
   // Icon Interaction
   function handleFormToggle() {
@@ -36,7 +36,7 @@ export default function NewEmployee({open, handleClose, handleToggle, closeThis}
       .then(() => {
         refetchTree();
         refetchList();
-        closeThis();
+        handleToggle();
         toast.success('Employee added successfully');
       })
       .catch((res) => toast.error(res.data.error));

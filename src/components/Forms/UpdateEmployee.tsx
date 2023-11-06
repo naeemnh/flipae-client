@@ -1,7 +1,8 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { FaUserPen } from "react-icons/fa6";
+import { FaUserPen, FaXmark } from "react-icons/fa6";
+import { Tooltip } from 'react-tooltip';
 import classNames from "classnames";
 import toast from "react-hot-toast";
 
@@ -64,8 +65,10 @@ export default function UpdateEmployee({open, handleClose, handleToggle}: FormPr
 
   return (
     <div className={styles.formWrapper}>
-      <FaUserPen onClick={handleFormToggle} cursor={"pointer"} size={24} />
+      <FaUserPen data-tooltip-id="update" onClick={handleFormToggle} cursor={"pointer"} size={24} />
+      <Tooltip id="update" place="top" content="Update Employee" />
       <form onSubmit={handleSubmit} className={formClassNames}>
+        <FaXmark onClick={handleToggle} cursor={"pointer"} size={24} className={styles.close} />
         <select defaultValue={''} onChange={handleEmployeeSelection} name="employeeName" id="employeeName">
           <option value="">Employee</option>
           {data?.map((employee) => (

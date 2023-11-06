@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Login, Logout, NewEmployee, UpdateEmployee } from "@/components/Forms";
+import { DeleteEmployee, Login, Logout, NewEmployee, UpdateEmployee, UploadCSV } from "@/components/Forms";
 import { useFetchUserQuery } from "@/store/apis/authApi";
-import UploadCSV from "../Forms/UploadCSV";
 
 export default function Actions() {
   const {data, isSuccess} = useFetchUserQuery();
@@ -41,6 +40,7 @@ function LoggedInActions() {
       <UploadCSV open={fileOpen} handleClose={closeAddUpdate} handleToggle={toggleFileOpen}/>
       <NewEmployee open={addOpen} handleClose={closeUpdateFile} handleToggle={toggleAddOpen} />
       <UpdateEmployee open={updateOpen} handleClose={closeAddFile} handleToggle={toggleUpdateOpen} />
+      <DeleteEmployee />
       <Logout/>
     </>
   )

@@ -1,9 +1,10 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent } from "react";
 import classNames from "classnames";
 import toast from "react-hot-toast";
-import { FaUserPlus } from "react-icons/fa6";
+import { FaUserPlus, FaXmark } from "react-icons/fa6";
+import { Tooltip } from 'react-tooltip';
 
 import { FormProps } from "@/types";
 import styles from './forms.module.css';
@@ -22,8 +23,6 @@ export default function NewEmployee({open, handleClose, handleToggle}: FormProps
   const { refetch: refetchTree } = fetchEmployeeTree();
   const { refetch: refetchList } = fetchEmployeeList();
   const [addEmployee, results] = useAddEmployeeMutation();
-  const [employeeName, setEmployeeName] = useState<string>('');
-  const handleEmployeeName = (e: ChangeEvent<HTMLInputElement>) => setEmployeeName(e.target.value);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -40,15 +39,17 @@ export default function NewEmployee({open, handleClose, handleToggle}: FormProps
         toast.success('Employee added successfully');
       })
       .catch((res) => toast.error(res.data.error));
-    setEmployeeName('');
+      e.currentTarget.reset()
   }
 
   
   return (
     <div className={styles.formWrapper}>
-      <FaUserPlus onClick={handleFormToggle} cursor={'pointer'} size={24} />
+      <FaUserPlus data-tooltip-id="new" onClick={handleFormToggle} cursor={'pointer'} size={24} />
+      <Tooltip id="new" place="top" content="New Employee" />
       <form onSubmit={handleSubmit} className={formClassNames}>
-        <input type="text" name="employeeName" onChange={handleEmployeeName} value={employeeName} placeholder="Employee Name" />
+        <FaXmark onClick={handleToggle} cursor={'pointer'} size={24} className={styles.close}/>
+        <input type="text" name="employeeName" placeholder="Employee Name" />
         <button type="submit" >Add</button>
       </form>
     </div>

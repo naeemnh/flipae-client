@@ -14,7 +14,7 @@ export default async function Home() {
       <Store>
         <main className={styles.main}>
             <div className={styles.description}>
-              <div>
+              <p>
                   <Image
                     src="/logo.svg"
                     alt="FlipAE Logo"
@@ -23,12 +23,6 @@ export default async function Home() {
                     height={24}
                     priority
                   />
-              </div>
-              <p>
-                Get started by importing the&nbsp;
-                <a href="/download/inputData" target="_blank" rel="noopener noreferrer">
-                <code className={styles.code}>json file</code>
-                </a>
               </p>
               <div className={styles.actions}>
                 <Actions />

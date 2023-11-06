@@ -1,6 +1,7 @@
 "use client";
 
 import { FaCircleUser, FaTrashCan } from 'react-icons/fa6';
+import { Tooltip } from 'react-tooltip';
 import styles from './card.module.css';
 import { useDeleteEmployeeMutation, fetchEmployeeTree, fetchEmployeeList, useFetchUserQuery } from '@/store';
 import toast from 'react-hot-toast';
@@ -24,9 +25,12 @@ export default function Card({ name }: { name: string}) {
   return (
     <div className={styles.card}>
       {data && (
-          <button onClick={handleDelete} className={styles.close}>
-            <FaTrashCan  />
-          </button>
+          <>
+            <button data-tooltip-id={`${name}`} onClick={handleDelete} className={styles.close}>
+              <FaTrashCan  />
+            </button>
+            <Tooltip id={`${name}`} place="left" content="Delete" />
+          </>
       )}
       <FaCircleUser size={48} />
       <h2 className={styles.title}>

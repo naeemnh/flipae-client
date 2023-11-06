@@ -1,4 +1,4 @@
-import { useFetchUserQuery } from "@/store";
+import { Tooltip } from 'react-tooltip';
 import { FiLogOut } from "react-icons/fi";
 
 export default function Logout() {
@@ -8,6 +8,9 @@ export default function Logout() {
     window.location.reload();
   }
   return (
-    <FiLogOut onClick={handleLogout} cursor={'pointer'} size={24} />
+    <>
+      <FiLogOut data-tooltip-id="logout" onClick={handleLogout} cursor={'pointer'} size={24} />
+      <Tooltip id="logout" place="top" content="Logout" />
+    </>
   )
 }

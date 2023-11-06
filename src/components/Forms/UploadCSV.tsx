@@ -63,7 +63,7 @@ export default function UploadCSV({open, handleClose, handleToggle}: FormProps) 
         <input type="file" accept='.csv' name="csvFile" id="csvFile" placeholder='Choose .csv File' />
         <button type="submit">Upload</button>
         <span>
-          Download the&nbsp;<a href="/download/inputData" target="_blank" rel="noopener noreferrer"><code className={styles.code}>Example file <FiDownload size={20}/></code></a>
+          Download the&nbsp;<a href="/download/example.csv" target="_blank" rel="noopener noreferrer"><code className={styles.code}>Example file <FiDownload size={20}/></code></a>
         </span>
       </form>
     </div>
